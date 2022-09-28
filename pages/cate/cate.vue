@@ -1,30 +1,32 @@
 <template>
-	<view class="scroll-view-container">
-		<scroll-view class="left-scroll-view" scroll-y :style="{height : wh + 'px'}">
-			<block v-for="(item,i) in cateList" :key="i">
-				<view :class="['left-scroll-view-item',i=== active ? 'active':'']" @click="activeChanged(i)">
-					{{item.cat_name}}
-				</view>
-			</block>
-		</scroll-view>
-		<scroll-view class="right-scroll-view" scroll-y :style="{height : wh + 'px'}" :scroll-top="scrollTop">
-			<view class="cate-lv2" v-for="(item,i) in cateLevel2" :key="i">
-				<view class="cate-lv2-title">{{item.cat_name}}</view>
-				<!-- 动态渲染三级分类的列表数据 -->
-				<view class="cate-lv3-list">
-					<!-- 三级分类 Item 项 -->
-					<view class="cate-lv3-item" v-for="(items, i3) in item.children" :key="i3"
-						@click="gotoGoodsList(items)">
-						<!-- 图片 -->
-						<image :src="items.cat_icon"></image>
-						<!-- 文本 -->
-						<text>{{items.cat_name}}</text>
+	<view>
+		<my-search :bgColor="'hotpink'" :radius="1" @myclick="gotoSearch"></my-search>
+		<view class="scroll-view-container">
+			<scroll-view class="left-scroll-view" scroll-y :style="{height : wh + 'px'}">
+				<block v-for="(item,i) in cateList" :key="i">
+					<view :class="['left-scroll-view-item',i=== active ? 'active':'']" @click="activeChanged(i)">
+						{{item.cat_name}}
+					</view>
+				</block>
+			</scroll-view>
+			<scroll-view class="right-scroll-view" scroll-y :style="{height : wh + 'px'}" :scroll-top="scrollTop">
+				<view class="cate-lv2" v-for="(item,i) in cateLevel2" :key="i">
+					<view class="cate-lv2-title">{{item.cat_name}}</view>
+					<!-- 动态渲染三级分类的列表数据 -->
+					<view class="cate-lv3-list">
+						<!-- 三级分类 Item 项 -->
+						<view class="cate-lv3-item" v-for="(items, i3) in item.children" :key="i3"
+							@click="gotoGoodsList(items)">
+							<!-- 图片 -->
+							<image :src="items.cat_icon"></image>
+							<!-- 文本 -->
+							<text>{{items.cat_name}}</text>
+						</view>
 					</view>
 				</view>
-			</view>
-		</scroll-view>
+			</scroll-view>
+		</view>
 	</view>
-
 </template>
 
 <script>
@@ -43,7 +45,7 @@
 			// 获取当前系统的信息
 			const sysInfo = uni.getSystemInfoSync()
 			// 为 wh 窗口可用高度动态赋值
-			this.wh = sysInfo.windowHeight
+			this.wh = sysInfo.windowHeight - 50
 			this.getcateList()
 		},
 		methods: {
@@ -58,11 +60,17 @@
 			activeChanged(i) {
 				this.active = i
 				this.cateLevel2 = this.cateList[i].children
-				this.scrolltop = scrolltop === 0 ? 1 : 0
+				this.scrolltop = this.scrolltop === 0 ? 1 : 0
 			},
 			gotoGoodsList(item) {
 				uni.navigateTo({
 					url: '/subpkg/good_list/good_list?cid=' + item.cat_id
+				})
+			},
+			gotoSearch() {
+				// console.log(111)
+				uni.navigateTo({
+					url: '/subpkg/search/search'
 				})
 			}
 		}
