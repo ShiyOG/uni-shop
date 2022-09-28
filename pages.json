@@ -44,19 +44,18 @@
 			"path": "good_list/good_list",
 			"style": {
 				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 150
+			}
+
+		}, {
+			"path": "search/search",
+			"style": {
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
 
-		}    ,{
-                    "path" : "search/search",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		}]
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
